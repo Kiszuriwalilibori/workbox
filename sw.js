@@ -1,4 +1,8 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
+import {precacheAndRoute} from 'workbox-precaching';
+
+
+precacheAndRoute([{"revision":"6e7294f2f344a0403caad7605bf4c7ae","url":"css/style.css"},{"revision":"90f4f7a73d0f08bfd0d7850f06fa7504","url":"images/workbox_logo.png"},{"revision":"a5ed00cb67bb7de43a2034414e376439","url":"index.html"},{"revision":"268d6acb41445de1e064f5828aff6d43","url":"js/index.js"},{"revision":"93d4ab340b0e892e07399e253d85ce76","url":"workbox-config.js"}]);
 
 console.log('Hello from service-worker.js');
 
@@ -7,7 +11,6 @@ if (workbox) {
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
-// 主文档: 网络优先
 // https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.routing#registerRoute
 workbox.routing.registerRoute(
   /index\.html/,
@@ -17,7 +20,7 @@ workbox.routing.registerRoute(
   })
 );
 
-// JS 请求: 网络优先
+// JS
 workbox.routing.registerRoute(
   new RegExp('.*\.js'),
   workbox.strategies.networkFirst({
@@ -25,7 +28,7 @@ workbox.routing.registerRoute(
   })
 );
 
-// CSS 请求: 缓存优先，同时后台更新后下次打开页面才会被页面使用
+// CSS
 workbox.routing.registerRoute(
   // Cache CSS files
   /.*\.css/,
